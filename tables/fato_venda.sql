@@ -40,7 +40,7 @@ CREATE TABLE DIMENSAO_PRODUTO
     ( 
      surrogate_produto NUMBER (10)  NOT NULL , 
      codigo_produto NUMBER (4) , 
-     nome_produto NUMBER , 
+     nome_produto VARCHAR2 (50), 
      nome_fabricante VARCHAR2 (30) , 
      tipo_produto VARCHAR2 (30) , 
      genero_produto VARCHAR2 (30) 
