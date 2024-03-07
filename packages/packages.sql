@@ -63,10 +63,10 @@ CREATE OR REPLACE PACKAGE BODY data_load_pkg IS
   ) IS
   BEGIN
     load_dim_cliente(
-        p_surrogate_cliente => 2, -- Substitua 1 pelo seu valor real
-        p_nome_cliente => 'Nome Cliente', -- Substitua 'Nome Cliente' pelo nome real do cliente
-        p_sexo_cliente => 'Masculino', -- Substitua 'Masculino' pelo sexo real do cliente
-        p_idade_cliente => 30 -- Substitua 30 pela idade real do cliente
+        p_surrogate_cliente => 2, 
+        p_nome_cliente => 'Nome Cliente', 
+        p_sexo_cliente => 'Masculino', 
+        p_idade_cliente => 30 
     );
   END load_dim_cliente;
 
@@ -78,10 +78,10 @@ CREATE OR REPLACE PACKAGE BODY data_load_pkg IS
   ) IS
   BEGIN
     load_dim_data(
-        p_surrogate_data => 2, -- Substitua 1 pelo seu valor real
-        p_dia => 15, -- Substitua 15 pelo dia real
-        p_mes => 4, -- Substitua 4 pelo mês real
-        p_ano => 2024 -- Substitua 2024 pelo ano real
+        p_surrogate_data => 2, 
+        p_dia => 15, 
+        p_mes => 4, 
+        p_ano => 2024 
     );
   END load_dim_data;
 
@@ -97,12 +97,12 @@ PROCEDURE load_dim_local(
   ) IS
   BEGIN
     load_dim_local(
-        p_surrogate_loja => 2, -- Substitua 1 pelo seu valor real
-        p_nome_loja => 'Nome Loja', -- Substitua 'Nome Loja' pelo nome real da loja
-        p_codigo_loja => 1234, -- Substitua 1234 pelo código real da loja
-        p_bairro_loja => 'Bairro Loja', -- Substitua 'Bairro Loja' pelo bairro real da loja
-        p_cidade_loja => 'Cidade Loja', -- Substitua 'Cidade Loja' pela cidade real da loja
-        p_estado_loja => 'SP' -- Substitua 'SP' pelo estado real da loja
+        p_surrogate_loja => 2, 
+        p_nome_loja => 'Nome Loja', 
+        p_codigo_loja => 1234,
+        p_bairro_loja => 'Bairro Loja', 
+        p_cidade_loja => 'Cidade Loja', 
+        p_estado_loja => 'SP' 
     );
   END load_dim_local;
 
@@ -116,12 +116,12 @@ PROCEDURE load_dim_local(
   ) IS
   BEGIN
     load_dim_produto(
-        p_surrogate_produto => 3, -- Substitua 1 pelo seu valor real
-        p_codigo_produto => 5679, -- Substitua 5678 pelo código real do produto
-        p_nome_produto => 'Nome Produto', -- Substitua 'Nome Produto' pelo nome real do produto
-        p_nome_fabricante => 'Nome Fabricante', -- Substitua 'Nome Fabricante' pelo fabricante real do produto
-        p_tipo_produto => 'Tipo Produto', -- Substitua 'Tipo Produto' pelo tipo real do produto
-        p_genero_produto => 'Gênero Produto' -- Substitua 'Gênero Produto' pelo gênero real do produto
+        p_surrogate_produto => 3, 
+        p_codigo_produto => 5679, 
+        p_nome_produto => 'Nome Produto', 
+        p_nome_fabricante => 'Nome Fabricante', 
+        p_tipo_produto => 'Tipo Produto', 
+        p_genero_produto => 'Gênero Produto' 
     );
   END load_dim_produto;
 
@@ -134,11 +134,11 @@ PROCEDURE load_dim_local(
   ) IS
   BEGIN
     load_dim_vendedor(
-        p_surrogate_vendedor => 2, -- Substitua 1 pelo seu valor real
-        p_codigo_vendedor => 9876, -- Substitua 9876 pelo código real do vendedor
-        p_nome_vendedor => 'Nome Vendedor', -- Substitua 'Nome Vendedor' pelo nome real do vendedor
-        p_codigo_gerente => 5432, -- Substitua 5432 pelo código real do gerente
-        p_nome_gerente => 'Nome Gerente' -- Substitua 'Nome Gerente' pelo nome real do gerente
+        p_surrogate_vendedor => 2, 
+        p_codigo_vendedor => 9876, 
+        p_nome_vendedor => 'Nome Vendedor', 
+        p_codigo_gerente => 5432, 
+        p_nome_gerente => 'Nome Gerente' 
     );
   END load_dim_vendedor;
 
@@ -153,13 +153,13 @@ PROCEDURE load_dim_local(
   ) IS
   BEGIN
     load_fato_venda(
-        p_dim_local_surrogate_loja => 1, -- Substitua 1 pelo ID da loja da dimensão local
-        p_dim_produto_surrogate_produto => 1, -- Substitua 1 pelo ID do produto da dimensão produto
-        p_dim_data_surrogate_data => 1, -- Substitua 1 pelo ID da data da dimensão data
-        p_dim_cliente_surrogate_cliente => 1, -- Substitua 1 pelo ID do cliente da dimensão cliente
-        p_dim_vendedor_surrogate_vendedor => 1, -- Substitua 1 pelo ID do vendedor da dimensão vendedor
-        p_valor_venda => 500.00, -- Substitua 500.00 pelo valor da venda
-        p_quantidade_venda => 2 -- Substitua 2 pela quantidade vendida
+        p_dim_local_surrogate_loja => 1, 
+        p_dim_produto_surrogate_produto => 1, 
+        p_dim_data_surrogate_data => 1, 
+        p_dim_cliente_surrogate_cliente => 1, 
+        p_dim_vendedor_surrogate_vendedor => 1, 
+        p_valor_venda => 500.00, 
+        p_quantidade_venda => 2 
     );
   END load_fato_venda;
 
@@ -184,8 +184,8 @@ BEGIN
             p_dim_data_surrogate_data => i MOD v_max_data_id + 1,
             p_dim_cliente_surrogate_cliente => i MOD v_max_cliente_id + 1,
             p_dim_vendedor_surrogate_vendedor => i MOD v_max_vendedor_id + 1,
-            p_valor_venda => DBMS_RANDOM.VALUE(100, 1000), -- Gera um valor aleatório entre 100 e 1000
-            p_quantidade_venda => DBMS_RANDOM.VALUE(1, 10) -- Gera uma quantidade aleatória entre 1 e 10
+            p_valor_venda => DBMS_RANDOM.VALUE(100, 1000), 
+            p_quantidade_venda => DBMS_RANDOM.VALUE(1, 10) 
         );
     END LOOP;
 EXCEPTION
