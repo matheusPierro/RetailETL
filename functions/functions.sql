@@ -92,7 +92,7 @@ BEGIN
     END IF;
 
    
-    IF p_codigo_produto IS NULL OR p_codigo_produto < 1 OR p_codigo_produto > 9999 THEN
+    IF p_codigo_produto IS NULL OR p_codigo_produto < 0 OR p_codigo_produto > 9999 THEN
         v_valid := FALSE;
     END IF;
 
