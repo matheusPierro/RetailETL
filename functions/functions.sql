@@ -8,17 +8,15 @@ RETURN BOOLEAN
 IS
     v_valid BOOLEAN := TRUE;
 BEGIN
-    -- Verificar se o ID do cliente é nulo
+   
     IF p_surrogate_cliente IS NULL THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o nome do cliente é nulo ou vazio
     IF p_nome_cliente IS NULL OR p_nome_cliente = '' THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o sexo do cliente é nulo ou vazio
     IF p_sexo_cliente IS NULL OR p_sexo_cliente = '' THEN
         v_valid := FALSE;
     END IF;
@@ -37,12 +35,12 @@ RETURN BOOLEAN
 IS
     v_valid BOOLEAN := TRUE;
 BEGIN
-    -- Verificar se o dia está dentro do intervalo aceitável (1-31)
+ 
     IF p_dia IS NULL OR p_dia < 1 OR p_dia > 31 THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o mês está dentro do intervalo aceitável (1-12)
+
     IF p_mes IS NULL OR p_mes < 1 OR p_mes > 12 THEN
         v_valid := FALSE;
     END IF;
@@ -62,16 +60,16 @@ RETURN BOOLEAN
 IS
     v_valid BOOLEAN := TRUE;
 BEGIN
-    -- Verificar se o ID da loja é nulo
+
     IF p_surrogate_loja IS NULL THEN
         v_valid := FALSE;
     END IF;
-    -- Verificar se o código da loja está dentro do intervalo aceitável (1-9999)
+
     IF p_codigo_loja IS NULL OR p_codigo_loja < 1 OR p_codigo_loja > 9999 THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o estado da loja tem exatamente 2 caracteres
+   
     IF LENGTH(p_estado_loja) != 2 THEN
         v_valid := FALSE;
     END IF;
@@ -93,22 +91,22 @@ RETURN BOOLEAN
 IS
     v_valid BOOLEAN := TRUE;
 BEGIN
-    -- Verificar se o ID do produto é nulo
+   
     IF p_surrogate_produto IS NULL THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o código do produto está dentro do intervalo aceitável (1-9999)
+   
     IF p_codigo_produto IS NULL OR p_codigo_produto < 1 OR p_codigo_produto > 9999 THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o nome do fabricante é nulo ou vazio
+   
     IF p_nome_fabricante IS NULL OR p_nome_fabricante = '' THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o nome do fabricante não contém caracteres numéricos
+
     FOR i IN 1..LENGTH(p_nome_fabricante) LOOP
         IF SUBSTR(p_nome_fabricante, i, 1) BETWEEN '0' AND '9' THEN
             v_valid := FALSE;
@@ -131,22 +129,22 @@ RETURN BOOLEAN
 IS
     v_valid BOOLEAN := TRUE;
 BEGIN
-    -- Verificar se o ID do vendedor é nulo
+  
     IF p_surrogate_vendedor IS NULL THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o código do vendedor está dentro do intervalo aceitável (1-9999)
+ 
     IF p_codigo_vendedor IS NULL OR p_codigo_vendedor < 1 OR p_codigo_vendedor > 9999 THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o nome do vendedor é nulo ou vazio
+
     IF p_nome_vendedor IS NULL OR p_nome_vendedor = '' THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se o código do gerente está dentro do intervalo aceitável (1-9999)
+
     IF p_codigo_gerente IS NULL OR p_codigo_gerente < 1 OR p_codigo_gerente > 9999 THEN
         v_valid := FALSE;
     END IF;
@@ -168,12 +166,12 @@ RETURN BOOLEAN
 IS
     v_valid BOOLEAN := TRUE;
 BEGIN
-    -- Verificar se o valor da venda é não negativo
+    
     IF p_valor_venda < 0 THEN
         v_valid := FALSE;
     END IF;
 
-    -- Verificar se a quantidade de venda é positiva
+
     IF p_quantidade_venda <= 0 THEN
         v_valid := FALSE;
     END IF;
