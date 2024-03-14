@@ -69,8 +69,7 @@ CREATE TABLE FATO_VENDA
      DIMENSAO_PRODUTO_surrogate_produto NUMBER (10)  NOT NULL , 
      DIMENSAO_DATA_surrogate_data NUMBER (10)  NOT NULL , 
      DIMENSAO_CLIENTE_surrogate_cliente NUMBER (10)  NOT NULL , 
-    
- DIMENSAO_VENDEDOR_surrogate_vendedor NUMBER (10)  NOT NULL , 
+     DIMENSAO_VENDEDOR_surrogate_vendedor NUMBER (10)  NOT NULL , 
      valor_venda NUMBER (20,2) , 
      quantidade_venda NUMBER (10) 
     ) 

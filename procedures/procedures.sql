@@ -8,16 +8,20 @@ CREATE OR REPLACE PROCEDURE load_dim_cliente(
     v_count NUMBER;
 BEGIN
     SELECT COUNT(*) INTO v_count FROM DIMENSAO_CLIENTE WHERE surrogate_cliente = p_surrogate_cliente;
-    IF v_count > 0 THEN
-        RAISE_APPLICATION_ERROR(-20001, 'Chave duplicada encontrada para surrogate_cliente.');
+
+    IF v_count = 0 THEN
+        INSERT INTO DIMENSAO_CLIENTE (surrogate_cliente, nome_cliente, sexo_cliente, idade_cliente)
+        VALUES (p_surrogate_cliente, p_nome_cliente, p_sexo_cliente, p_idade_cliente);
+    ELSE
+        UPDATE DIMENSAO_CLIENTE
+        SET nome_cliente = p_nome_cliente,
+            sexo_cliente = p_sexo_cliente,
+            idade_cliente = p_idade_cliente
+        WHERE surrogate_cliente = p_surrogate_cliente;
     END IF;
-
-    INSERT INTO DIMENSAO_CLIENTE (surrogate_cliente, nome_cliente, sexo_cliente, idade_cliente)
-    VALUES (p_surrogate_cliente, p_nome_cliente, p_sexo_cliente, p_idade_cliente);
-
 EXCEPTION
     WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Erro ao inserir na DIMENSAO_CLIENTE: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Erro ao inserir/atualizar na DIMENSAO_CLIENTE: ' || SQLERRM);
 END;
 
 CREATE OR REPLACE PROCEDURE load_dim_data(
@@ -31,10 +35,10 @@ BEGIN
     SELECT COUNT(*) INTO v_count FROM DIMENSAO_DATA WHERE surrogate_data = p_surrogate_data;
     IF v_count > 0 THEN
         RAISE_APPLICATION_ERROR(-20001, 'Chave duplicada encontrada para surrogate_data.');
+    ELSE
+        INSERT INTO DIMENSAO_DATA (surrogate_data, dia, mes, ano)
+        VALUES (p_surrogate_data, p_dia, p_mes, p_ano);
     END IF;
-
-    INSERT INTO DIMENSAO_DATA (surrogate_data, dia, mes, ano)
-    VALUES (p_surrogate_data, p_dia, p_mes, p_ano);
 
 EXCEPTION
     WHEN OTHERS THEN
@@ -49,19 +53,23 @@ CREATE OR REPLACE PROCEDURE load_dim_local(
     p_cidade_loja IN DIMENSAO_LOCAL.cidade_loja%TYPE,
     p_estado_loja IN DIMENSAO_LOCAL.estado_loja%TYPE
 ) IS
-    v_count NUMBER;
 BEGIN
-    SELECT COUNT(*) INTO v_count FROM DIMENSAO_LOCAL WHERE surrogate_loja = p_surrogate_loja;
-    IF v_count > 0 THEN
-        RAISE_APPLICATION_ERROR(-20001, 'Chave duplicada encontrada para surrogate_loja.');
-    END IF;
-
-    INSERT INTO DIMENSAO_LOCAL (surrogate_loja, nome_loja, codigo_loja, bairro_loja, cidade_loja, estado_loja)
-    VALUES (p_surrogate_loja, p_nome_loja, p_codigo_loja, p_bairro_loja, p_cidade_loja, p_estado_loja);
+    MERGE INTO DIMENSAO_LOCAL d
+    USING DUAL
+    ON (d.surrogate_loja = p_surrogate_loja)
+    WHEN MATCHED THEN
+      UPDATE SET d.nome_loja = p_nome_loja,
+                 d.codigo_loja = p_codigo_loja,
+                 d.bairro_loja = p_bairro_loja,
+                 d.cidade_loja = p_cidade_loja,
+                 d.estado_loja = p_estado_loja
+    WHEN NOT MATCHED THEN
+      INSERT (surrogate_loja, nome_loja, codigo_loja, bairro_loja, cidade_loja, estado_loja)
+      VALUES (p_surrogate_loja, p_nome_loja, p_codigo_loja, p_bairro_loja, p_cidade_loja, p_estado_loja);
 
 EXCEPTION
     WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Erro ao inserir na DIMENSAO_LOCAL: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Erro ao inserir/atualizar na DIMENSAO_LOCAL: ' || SQLERRM);
 END;
 
 CREATE OR REPLACE PROCEDURE load_dim_produto(
@@ -94,19 +102,22 @@ CREATE OR REPLACE PROCEDURE load_dim_vendedor(
     p_codigo_gerente IN DIMENSAO_VENDEDOR.codigo_gerente%TYPE,
     p_nome_gerente IN DIMENSAO_VENDEDOR.nome_gerente%TYPE
 ) IS
-    v_count NUMBER;
 BEGIN
-    SELECT COUNT(*) INTO v_count FROM DIMENSAO_VENDEDOR WHERE surrogate_vendedor = p_surrogate_vendedor;
-    IF v_count > 0 THEN
-        RAISE_APPLICATION_ERROR(-20001, 'Chave duplicada encontrada para surrogate_vendedor.');
-    END IF;
-
-    INSERT INTO DIMENSAO_VENDEDOR (surrogate_vendedor, codigo_vendedor, nome_vendedor, codigo_gerente, nome_gerente)
-    VALUES (p_surrogate_vendedor, p_codigo_vendedor, p_nome_vendedor, p_codigo_gerente, p_nome_gerente);
+    MERGE INTO DIMENSAO_VENDEDOR d
+    USING DUAL
+    ON (d.surrogate_vendedor = p_surrogate_vendedor)
+    WHEN MATCHED THEN
+        UPDATE SET d.codigo_vendedor = p_codigo_vendedor,
+                   d.nome_vendedor = p_nome_vendedor,
+                   d.codigo_gerente = p_codigo_gerente,
+                   d.nome_gerente = p_nome_gerente
+    WHEN NOT MATCHED THEN
+        INSERT (surrogate_vendedor, codigo_vendedor, nome_vendedor, codigo_gerente, nome_gerente)
+        VALUES (p_surrogate_vendedor, p_codigo_vendedor, p_nome_vendedor, p_codigo_gerente, p_nome_gerente);
 
 EXCEPTION
     WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Erro ao inserir na DIMENSAO_VENDEDOR: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Erro ao inserir/atualizar na DIMENSAO_VENDEDOR: ' || SQLERRM);
 END;
 
 CREATE OR REPLACE PROCEDURE load_fato_venda(
@@ -118,7 +129,8 @@ CREATE OR REPLACE PROCEDURE load_fato_venda(
     p_valor_venda IN FATO_VENDA.valor_venda%TYPE,
     p_quantidade_venda IN FATO_VENDA.quantidade_venda%TYPE
 ) IS
-BEGIN
+    v_count NUMBER;
+BEGIN    
     INSERT INTO FATO_VENDA (
         DIMENSAO_LOCAL_surrogate_loja,
         DIMENSAO_PRODUTO_surrogate_produto,
@@ -136,7 +148,6 @@ BEGIN
         p_valor_venda,
         p_quantidade_venda
     );
-
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Erro ao inserir na FATO_VENDA: ' || SQLERRM);
