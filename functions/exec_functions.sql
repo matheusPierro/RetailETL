@@ -1,7 +1,7 @@
 DECLARE
     v_result BOOLEAN;
 BEGIN
-    v_result := validar_dimensao_cliente(2, 'João', 'Masculino', 30);
+    v_result := valid_dimensao_cliente(2, 'João', 'Masculino', 30);
     
     IF v_result THEN
         DBMS_OUTPUT.PUT_LINE('Os dados do cliente são válidos.');
@@ -14,7 +14,7 @@ END;
 DECLARE
     v_result BOOLEAN;
 BEGIN
-    v_result := validar_dimensao_data(1, 12, 6, 2023);
+    v_result := valid_dimensao_data(1, 12, 6, 2023);
     
     IF v_result THEN
         DBMS_OUTPUT.PUT_LINE('Os dados da data são válidos.');
@@ -27,7 +27,7 @@ END;
 DECLARE
     v_result BOOLEAN;
 BEGIN
-    v_result := validar_dimensao_local(1, 'Nome da Loja', 1234, 'Bairro da Loja', 'Cidade da Loja', 'SP');
+    v_result := valid_dimensao_local(1, 'Nome da Loja', 1234, 'Bairro da Loja', 'Cidade da Loja', 'SP');
     
     IF v_result THEN
         DBMS_OUTPUT.PUT_LINE('Os dados da loja são válidos.');
@@ -40,7 +40,7 @@ END;
 DECLARE
     v_result BOOLEAN;
 BEGIN
-    v_result := validar_dimensao_produto(1, 1234, 'Nome do Produto', 'Nome do Fabricante', 'Tipo do Produto', 'Gênero do Produto');
+    v_result := valid_dimensao_produto(1, 1234, 'Nome do Produto', 'Nome do Fabricante', 'Tipo do Produto', 'Gênero do Produto');
     
     IF v_result THEN
         DBMS_OUTPUT.PUT_LINE('Os dados do produto são válidos.');
@@ -53,7 +53,7 @@ END;
 DECLARE
     v_result BOOLEAN;
 BEGIN
-    v_result := validar_dimensao_vendedor(1, 1234, 'Nome do Vendedor', 5678, 'Nome do Gerente');
+    v_result := valid_dimensao_vendedor(1, 1234, 'Nome do Vendedor', 5678, 'Nome do Gerente');
     
     IF v_result THEN
         DBMS_OUTPUT.PUT_LINE('Os dados do vendedor são válidos.');

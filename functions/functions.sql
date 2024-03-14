@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION validar_dimensao_cliente (
+CREATE OR REPLACE FUNCTION valid_dimensao_cliente (
     p_surrogate_cliente IN NUMBER,
     p_nome_cliente      IN VARCHAR2,
     p_sexo_cliente      IN VARCHAR2,
@@ -22,10 +22,8 @@ BEGIN
     END IF;
     RETURN v_valid;
 END;
-/
 
-
-CREATE OR REPLACE FUNCTION validar_dimensao_data (
+CREATE OR REPLACE FUNCTION valid_dimensao_data (
     p_surrogate_data IN NUMBER,
     p_dia            IN NUMBER,
     p_mes            IN NUMBER,
@@ -46,9 +44,8 @@ BEGIN
     END IF;
     RETURN v_valid;
 END;
-/
 
-CREATE OR REPLACE FUNCTION validar_dimensao_local (
+CREATE OR REPLACE FUNCTION valid_dimensao_local (
     p_surrogate_loja IN NUMBER,
     p_nome_loja      IN NVARCHAR2,
     p_codigo_loja    IN NUMBER,
@@ -76,10 +73,8 @@ BEGIN
 
     RETURN v_valid;
 END;
-/
 
-
-CREATE OR REPLACE FUNCTION validar_dimensao_produto (
+CREATE OR REPLACE FUNCTION valid_dimensao_produto (
     p_surrogate_produto   IN NUMBER,
     p_codigo_produto      IN NUMBER,
     p_nome_produto        IN VARCHAR2,
@@ -116,9 +111,8 @@ BEGIN
 
     RETURN v_valid;
 END;
-/
 
-CREATE OR REPLACE FUNCTION validar_dimensao_vendedor (
+CREATE OR REPLACE FUNCTION valid_dimensao_vendedor (
     p_surrogate_vendedor IN NUMBER,
     p_codigo_vendedor    IN NUMBER,
     p_nome_vendedor      IN VARCHAR2,
@@ -150,8 +144,6 @@ BEGIN
     END IF;
     RETURN v_valid;
 END;
-/
-
 
 CREATE OR REPLACE FUNCTION validar_fato_venda (
     p_dimensao_local_surrogate   IN NUMBER,
@@ -178,4 +170,3 @@ BEGIN
 
     RETURN v_valid;
 END;
-/
